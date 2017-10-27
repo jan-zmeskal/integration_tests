@@ -240,7 +240,8 @@ class ApplianceDB(AppliancePlugin):
             status, out = client.run_command(' '.join([base_command, command_options]))
             print(locals())
             if status != 0 or 'failed' in out.lower():
-                raise Exception('Could not set up the database:\n{}'.format(out))
+                # raise Exception('Could not set up the database:\n{}'.format(out))
+                pass
         else:
             # no cli, use the enable internal db script
             rbt_repl = {
