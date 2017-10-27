@@ -257,6 +257,10 @@ class CatalogItem(Updateable, Pretty, Navigatable, WidgetasticTaggable):
         print(vars(view))
         print(vars(view.context['object']))
         print(view.is_displayed)
+        print('view.in_explorer: {}'.format(view.in_explorer))
+        print('view.catalog_items.is_opened: {}'.format(view.catalog_items.is_opened))
+        print('view.title.text: {}'.format(view.title.text))
+        print("view.context['object'].name: {}".format(view.context['object'].name))
         print('>>>>>>>>PRIVATE<<<<<<<<<<<<<<<<')
         assert view.is_displayed
         if changed:
