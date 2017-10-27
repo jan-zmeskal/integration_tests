@@ -252,6 +252,7 @@ class CatalogItem(Updateable, Pretty, Navigatable, WidgetasticTaggable):
             view.save_button.click()
             print(view.save_button)
             print(dir(view.save_button))
+            print(vars(view.save_button))
         else:
             view.cancel_button.click()
         time.sleep(5)
