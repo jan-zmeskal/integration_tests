@@ -261,7 +261,9 @@ class CatalogItem(Updateable, Pretty, Navigatable, WidgetasticTaggable):
         print('view.catalog_items.is_opened: {}'.format(view.catalog_items.is_opened))
         print('view.title.text: {}'.format(view.title.text))
         print("view.context['object'].name: {}".format(view.context['object'].name))
+        print(type(view))
         print('>>>>>>>>PRIVATE<<<<<<<<<<<<<<<<')
+        import time; time.sleep(2)
         assert view.is_displayed
         if changed:
             view.flash.assert_message(
