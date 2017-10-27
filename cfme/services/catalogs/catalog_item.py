@@ -245,13 +245,18 @@ class CatalogItem(Updateable, Pretty, Navigatable, WidgetasticTaggable):
         assert view.is_displayed
 
     def update(self, updates):
+        import time
         view = navigate_to(self, 'Edit')
         changed = view.fill(updates)
         if changed:
             view.save_button.click()
+            print(view.save_button)
+            print(dir(view.save_button))
         else:
             view.cancel_button.click()
+        time.sleep(5)
         view = self.create_view(DetailsCatalogItemView, override=updates)
+        time.sleep(5)
         print('>>>>>>>>PRIVATE<<<<<<<<<<<<<<<<')
         print('changed: {}'.format(changed))
         print(vars(view))
@@ -263,7 +268,7 @@ class CatalogItem(Updateable, Pretty, Navigatable, WidgetasticTaggable):
         print("view.context['object'].name: {}".format(view.context['object'].name))
         print(type(view))
         print('>>>>>>>>PRIVATE<<<<<<<<<<<<<<<<')
-        import time; time.sleep(2)
+        time.sleep(5)
         assert view.is_displayed
         if changed:
             view.flash.assert_message(
