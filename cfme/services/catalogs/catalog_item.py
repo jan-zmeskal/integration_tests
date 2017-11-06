@@ -14,6 +14,7 @@ from cfme.utils.pretty import Pretty
 from cfme.utils.appliance import Navigatable
 from cfme.utils.appliance.implementations.ui import navigator, CFMENavigateStep, navigate_to
 from cfme.utils import version
+from cfme.utils.wait import wait_for
 from . import ServicesCatalogView
 
 
@@ -252,7 +253,7 @@ class CatalogItem(Updateable, Pretty, Navigatable, WidgetasticTaggable):
         view = navigate_to(self, 'Edit')
         changed = view.fill(updates)
         if changed:
-            view.save_button.click()
+            view.save_button.click(handle_alert=True)
         else:
             view.cancel_button.click()
         view = self.create_view(DetailsCatalogItemView, override=updates)
