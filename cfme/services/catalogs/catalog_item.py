@@ -113,6 +113,12 @@ class EditCatalogItemView(BasicInfoForm):
                 .format(self.context['object'].name)
         )
 
+    def after_fill(self, was_change):
+        from time import sleep
+        # ensure_page_safe ?
+        print('HACK: sleeping')
+        sleep(5)
+
 
 class AddButtonGroupView(ButtonGroupForm):
 
