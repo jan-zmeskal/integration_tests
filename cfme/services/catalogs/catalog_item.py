@@ -114,10 +114,9 @@ class EditCatalogItemView(BasicInfoForm):
         )
 
     def after_fill(self, was_change):
-        from time import sleep
-        # ensure_page_safe ?
-        print('HACK: sleeping')
-        sleep(5)
+        # TODO: This is a workaround (Jira RHCFQE-5429)
+        if was_change:
+            wait_for(lambda: not self.save_button.disabled, timeout='10s', delay=0.2)
 
 
 class AddButtonGroupView(ButtonGroupForm):
