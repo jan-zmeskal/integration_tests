@@ -274,13 +274,26 @@ def ssa_profile(appliance, ssa_vm, ssa_policy):
     profile.delete()
 
 
+def create_system_release_dict(system_release_string):
+    system_release_list = filter(None, system_release_string.splitlines())
+    system_release_dict = {}
+    for pair in system_release_list:
+        k,v = pair.split('=')
+        system_release_dict[k] = v.strip('"')
+    return system_release_dict
+
+
 def detect_system_type(vm):
     if hasattr(vm, 'ssh'):
         system_release = safe_string(vm.ssh.run_command("cat /etc/os-release").output)
+        system_release_dict = create_system_release_dict(system_release)
 
         all_systems_dict = RPM_BASED.values() + DEB_BASED.values()
         for systems_type in all_systems_dict:
-            if systems_type['id'].lower() in system_release.lower():
+            system_id = systems_type['id'].lower()
+            if system_id in system_release.lower():
+                if system_id == 'red hat' and system_release_dict.get('VERSION_ID').startswith('7'):
+                    systems_type['os_type'] = 'red hat'
                 return systems_type
     else:
         return WINDOWS
@@ -443,8 +456,8 @@ def test_ssa_schedule(ssa_vm, schedule_ssa, soft_assert, appliance):
 @pytest.mark.rhv1
 @pytest.mark.tier(2)
 @pytest.mark.long_running
-@pytest.mark.meta(blockers=[BZ(1551273, forced_streams=['5.8', '5.9'],
-    unblock=lambda provider: not provider.one_of(RHEVMProvider))])
+# @pytest.mark.meta(blockers=[BZ(1551273, forced_streams=['5.8', '5.9'],
+#     unblock=lambda provider: not provider.one_of(RHEVMProvider))])
 def test_ssa_vm(ssa_vm, soft_assert, appliance, ssa_profile):
     """ Tests SSA can be performed and returns sane results
 
