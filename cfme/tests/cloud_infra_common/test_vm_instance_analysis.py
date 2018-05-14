@@ -456,8 +456,10 @@ def test_ssa_compliance(local_setup_provider, ssa_compliance_profile, ssa_profil
                 c_packages, c_services)
 
     soft_assert(c_lastanalyzed != 'Never', "Last Analyzed is set to Never")
-    soft_assert(e_os_type in details_os_icon.lower(),
-                "details icon: '{}' not in '{}'".format(e_os_type, details_os_icon))
+    # RHEL has 'Red Hat' in details_os_icon, but 'redhat' in quadicon_os_icon
+    os_type = e_os_type if e_os_type != 'redhat' else 'red hat'
+    soft_assert(os_type in details_os_icon.lower(),
+                "details icon: '{}' not in '{}'".format(os_type, details_os_icon))
     soft_assert(e_os_type in quadicon_os_icon.lower(),
                 "quad icon: '{}' not in '{}'".format(e_os_type, quadicon_os_icon))
 
@@ -602,7 +604,7 @@ def test_ssa_vm(ssa_vm, soft_assert, appliance, ssa_profiled_vm):
     # RHEL has 'Red Hat' in details_os_icon, but 'redhat' in quadicon_os_icon
     os_type = e_os_type if e_os_type != 'redhat' else 'red hat'
     soft_assert(os_type in details_os_icon.lower(),
-                "details icon: '{}' not in '{}'".format(e_os_type, details_os_icon))
+                "details icon: '{}' not in '{}'".format(os_type, details_os_icon))
     soft_assert(e_os_type in quadicon_os_icon.lower(),
                 "quad icon: '{}' not in '{}'".format(e_os_type, quadicon_os_icon))
 

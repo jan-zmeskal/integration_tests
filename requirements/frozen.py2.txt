@@ -305,5 +305,5 @@ widgetsnbextension==3.2.1
 wrapanapi==2.8.12
 wrapt==1.10.11
 xmltodict==0.11.0
-yaycl==0.3.0
-yaycl-crypt==0.3.0
+yaycl==0.2.0
+yaycl-crypt==0.2.0
